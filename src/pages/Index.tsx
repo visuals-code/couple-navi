@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MessageCircle, Home, Baby, DollarSign, FileText, Heart, Sparkles } from "lucide-react";
+import { MessageCircle, Home, DollarSign, Heart, Building2, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -9,23 +9,23 @@ const Index = () => {
   const features = [
     {
       icon: Home,
-      title: "주거 지원",
-      description: "신혼부부 특별공급, 전세자금 대출 등",
+      title: "부동산 및 청약",
+      description: "청약 조건/가점, 매매/임대 계약, HUG 보증",
     },
     {
       icon: DollarSign,
-      title: "대출 정보",
-      description: "저금리 신혼부부 대출 상품 비교",
+      title: "금융 지원 및 세금",
+      description: "정책 대출, 출산/결혼 지원금, 세금 혜택",
     },
     {
-      icon: Baby,
-      title: "출산 혜택",
-      description: "출산 지원금, 육아휴직 제도 안내",
+      icon: Heart,
+      title: "가족 및 복지 제도",
+      description: "육아휴직, 의료비 지원, 심리 상담",
     },
     {
-      icon: FileText,
-      title: "세금 감면",
-      description: "신혼부부 세액공제 및 감면 혜택",
+      icon: Building2,
+      title: "사적 기업 혜택",
+      description: "웨딩 마일리지, 신혼여행, 제휴 할인",
     },
   ];
 
@@ -48,7 +48,7 @@ const Index = () => {
           </h1>
           
           <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in px-4">
-            주거, 대출, 출산, 세금 지원 등 흩어진 정보를 한곳에서.
+            부동산, 금융, 복지, 기업 혜택까지 흩어진 정보를 한곳에서.
             <br className="hidden md:block" />
             AI가 여러분의 상황에 꼭 맞는 정책을 찾아드립니다.
           </p>

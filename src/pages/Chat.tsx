@@ -33,7 +33,7 @@ const Chat = () => {
     const welcomeMessage: Message = {
       id: "1",
       role: "assistant",
-      content: `안녕하세요! 신혼부부 지원 정책 상담 챗봇입니다.\n\n📍 거주 지역: ${region}\n👶 자녀 현황: ${getChildrenLabel(children)}\n\n위 정보를 바탕으로 맞춤형 정책을 안내해드리겠습니다. 궁금하신 내용을 편하게 물어보세요.\n\n예시:\n• 신혼부부 전세자금 대출은 어떻게 받나요?\n• 출산 지원금은 얼마나 받을 수 있나요?\n• 우리 지역의 청약 혜택이 궁금해요`,
+      content: `안녕하세요! 신혼부부 지원 정책 상담 챗봇입니다.\n\n📍 거주 지역: ${region}\n👶 자녀 현황: ${getChildrenLabel(children)}\n\n위 정보를 바탕으로 맞춤형 정책을 안내해드리겠습니다. 궁금하신 내용을 편하게 물어보세요.\n\n예시:\n• 청약 가점 계산은 어떻게 하나요?\n• 정책 대출 금리와 한도가 궁금해요\n• 육아휴직 제도에 대해 알려주세요\n• 신혼여행 항공사 특별 혜택이 있나요?`,
       timestamp: new Date(),
     };
     
