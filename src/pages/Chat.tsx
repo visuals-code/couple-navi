@@ -104,7 +104,7 @@ const Chat = () => {
         </Button>
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-primary flex items-center justify-center flex-shrink-0">
-            <Heart className="h-4 w-4 md:h-5 md:w-5 text-primary-foreground" />
+            <Heart className="h-4 w-4 md:h-5 md:w-5 text-white" />
           </div>
           <div className="min-w-0 flex-1">
             <h1 className="font-semibold text-foreground text-sm md:text-base truncate">
@@ -150,7 +150,7 @@ const Chat = () => {
             onClick={handleSend}
             disabled={!input.trim() || isLoading}
             size="icon"
-            className="rounded-full bg-gradient-primary hover:opacity-90 transition-opacity shadow-soft flex-shrink-0 text-primary-foreground"
+            className="rounded-full bg-gradient-primary hover:opacity-90 transition-opacity shadow-soft flex-shrink-0"
           >
             <Send className="h-4 w-4 md:h-5 md:w-5" />
           </Button>

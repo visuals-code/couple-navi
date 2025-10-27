@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Baby } from "lucide-react";
@@ -74,7 +73,7 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
                   onClick={() => setSelectedRegion(region)}
                   className={`h-12 ${
                     selectedRegion === region 
-                      ? "bg-gradient-primary text-primary-foreground hover:opacity-90" 
+                      ? "bg-gradient-primary text-white hover:opacity-90" 
                       : "hover:bg-secondary"
                   }`}
                 >
@@ -91,7 +90,7 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
                   onClick={() => setSelectedChildren(option.value)}
                   className={`w-full h-14 justify-start text-left ${
                     selectedChildren === option.value 
-                      ? "bg-gradient-primary text-primary-foreground hover:opacity-90" 
+                      ? "bg-gradient-primary text-white hover:opacity-90" 
                       : "hover:bg-secondary"
                   }`}
                 >
@@ -112,7 +111,7 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
             <Button
               onClick={handleNext}
               disabled={step === 1 ? !selectedRegion : !selectedChildren}
-              className="flex-1 bg-gradient-primary hover:opacity-90 text-primary-foreground"
+              className="flex-1 bg-gradient-primary hover:opacity-90 text-white"
             >
               {step === 1 ? "다음" : "시작하기"}
             </Button>
@@ -127,3 +126,5 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
     </div>
   );
 };
+
+import { useState } from "react";
