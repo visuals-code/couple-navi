@@ -56,7 +56,7 @@ const Index = () => {
           <Button
             onClick={() => navigate("/chat")}
             size="lg"
-            className="bg-gradient-primary hover:opacity-90 transition-opacity text-white rounded-full px-6 py-5 md:px-8 md:py-6 text-base md:text-lg shadow-soft animate-fade-in"
+            className="bg-gradient-primary hover:opacity-90 transition-opacity text-primary-foreground rounded-full px-6 py-5 md:px-8 md:py-6 text-base md:text-lg shadow-soft animate-fade-in"
           >
             <MessageCircle className="mr-2 h-4 w-4 md:h-5 md:w-5" />
             상담 시작하기
@@ -85,7 +85,7 @@ const Index = () => {
               >
                 <CardContent className="p-4 md:p-6 text-center space-y-3 md:space-y-4">
                   <div className="w-12 h-12 md:w-16 md:h-16 mx-auto rounded-2xl bg-gradient-primary flex items-center justify-center shadow-soft">
-                    <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                    <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-primary-foreground" />
                   </div>
                   <h3 className="font-semibold text-base md:text-lg text-foreground">
                     {feature.title}
@@ -114,7 +114,7 @@ const Index = () => {
               
               <div className="space-y-5 md:space-y-6">
                 <div className="flex gap-3 md:gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold shadow-soft text-sm md:text-base">
+                  <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold shadow-soft text-sm md:text-base">
                     1
                   </div>
                   <div>
@@ -128,7 +128,7 @@ const Index = () => {
                 </div>
 
                 <div className="flex gap-3 md:gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold shadow-soft text-sm md:text-base">
+                  <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold shadow-soft text-sm md:text-base">
                     2
                   </div>
                   <div>
@@ -142,7 +142,7 @@ const Index = () => {
                 </div>
 
                 <div className="flex gap-3 md:gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold shadow-soft text-sm md:text-base">
+                  <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold shadow-soft text-sm md:text-base">
                     3
                   </div>
                   <div>
@@ -158,7 +158,7 @@ const Index = () => {
 
               <Button
                 onClick={() => navigate("/chat")}
-                className="w-full mt-6 md:mt-8 bg-gradient-primary hover:opacity-90 transition-opacity text-white rounded-full py-5 md:py-6 shadow-soft text-sm md:text-base"
+                className="w-full mt-6 md:mt-8 bg-gradient-primary hover:opacity-90 transition-opacity text-primary-foreground rounded-full py-5 md:py-6 shadow-soft text-sm md:text-base"
               >
                 <MessageCircle className="mr-2 h-4 w-4 md:h-5 md:w-5" />
                 지금 바로 시작하기
