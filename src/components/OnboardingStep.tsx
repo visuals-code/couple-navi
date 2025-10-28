@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Baby } from "lucide-react";
+import { MapPin, Home } from "lucide-react";
 
 interface OnboardingStepProps {
-  onComplete: (region: string, hasChildren: string) => void;
+  onComplete: (region: string, housing: string) => void;
 }
 
 const regions = [
@@ -11,24 +11,24 @@ const regions = [
   "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"
 ];
 
-const childrenOptions = [
-  { value: "none", label: "자녀 없음" },
-  { value: "planning", label: "계획 중" },
-  { value: "one", label: "1명" },
-  { value: "two", label: "2명" },
-  { value: "three_plus", label: "3명 이상" }
+const housingOptions = [
+  { value: "none", label: "무주택" },
+  { value: "jeonse", label: "전세" },
+  { value: "wolse", label: "월세" },
+  { value: "self", label: "자가" },
+  { value: "etc", label: "기타" },
 ];
 
 export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
   const [step, setStep] = useState(1);
   const [selectedRegion, setSelectedRegion] = useState<string>("");
-  const [selectedChildren, setSelectedChildren] = useState<string>("");
+  const [selectedHousing, setSelectedHousing] = useState<string>("");
 
   const handleNext = () => {
     if (step === 1 && selectedRegion) {
       setStep(2);
-    } else if (step === 2 && selectedChildren) {
-      onComplete(selectedRegion, selectedChildren);
+    } else if (step === 2 && selectedHousing) {
+      onComplete(selectedRegion, selectedHousing);
     }
   };
 
@@ -50,16 +50,16 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
               {step === 1 ? (
                 <MapPin className="h-6 w-6 text-primary" />
               ) : (
-                <Baby className="h-6 w-6 text-primary" />
+                <Home className="h-6 w-6 text-primary" />
               )}
               <h2 className="text-xl md:text-2xl font-bold text-foreground">
-                {step === 1 ? "거주 지역을 선택해주세요" : "자녀 현황을 알려주세요"}
+                {step === 1 ? "거주 지역을 선택해주세요" : "주거 형태를 알려주세요"}
               </h2>
             </div>
             <p className="text-sm text-muted-foreground">
               {step === 1 
                 ? "지역별 맞춤 정책을 안내해드립니다"
-                : "자녀 상황에 맞는 지원 정책을 찾아드립니다"
+                : "주거 형태에 맞는 지원 정책을 찾아드립니다"
               }
             </p>
           </div>
@@ -83,13 +83,13 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
             </div>
           ) : (
             <div className="space-y-2 mb-6">
-              {childrenOptions.map((option) => (
+              {housingOptions.map((option) => (
                 <Button
                   key={option.value}
-                  variant={selectedChildren === option.value ? "default" : "outline"}
-                  onClick={() => setSelectedChildren(option.value)}
+                  variant={selectedHousing === option.value ? "default" : "outline"}
+                  onClick={() => setSelectedHousing(option.value)}
                   className={`w-full h-14 justify-start text-left ${
-                    selectedChildren === option.value 
+                    selectedHousing === option.value 
                       ? "bg-gradient-primary text-white hover:opacity-90" 
                       : "hover:bg-secondary"
                   }`}
@@ -110,8 +110,8 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
             </Button>
             <Button
               onClick={handleNext}
-              disabled={step === 1 ? !selectedRegion : !selectedChildren}
-              className="flex-1 bg-gradient-primary hover:opacity-90 text-white"
+              disabled={step === 1 ? !selectedRegion : !selectedHousing}
+              className="flex-1 bg-[var(--button-bg)] hover:bg-[var(--button-bg)] hover:opacity-90 text-white"
             >
               {step === 1 ? "다음" : "시작하기"}
             </Button>

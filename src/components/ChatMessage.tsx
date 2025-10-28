@@ -17,7 +17,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
       <div
         className={`max-w-[85%] md:max-w-[75%] rounded-2xl px-3 py-2 md:px-4 md:py-3 shadow-card ${
           isUser
-            ? "bg-gradient-primary text-white"
+            ? "bg-[var(--chat-user-bg)] text-white"
             : "bg-card text-foreground border border-border"
         }`}
       >

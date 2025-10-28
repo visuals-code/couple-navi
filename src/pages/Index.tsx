@@ -32,7 +32,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-12 md:py-16 lg:py-24">
+      <section className="container mx-auto px-4 pt-12 md:pt-16 lg:pt-24 ">
         <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-8">
           <div className="inline-flex items-center gap-2 bg-card px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-soft border border-border animate-fade-in">
             <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-primary" />
@@ -48,15 +48,15 @@ const Index = () => {
           </h1>
           
           <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in px-4">
-            부동산, 금융, 복지, 기업 혜택까지 흩어진 정보를 한곳에서.
-            <br className="hidden md:block" />
+            부동산, 금융, 복지, 기업 혜택까지 흩어진 정보를 한곳에서
+            <br />
             AI가 여러분의 상황에 꼭 맞는 정책을 찾아드립니다.
           </p>
 
           <Button
             onClick={() => navigate("/chat")}
             size="lg"
-            className="bg-gradient-primary hover:opacity-90 transition-opacity text-white rounded-full px-6 py-5 md:px-8 md:py-6 text-base md:text-lg shadow-soft animate-fade-in"
+            className="bg-[var(--button-bg)] hover:opacity-90 transition-opacity text-white rounded-full px-6 py-5 md:px-8 md:py-6 text-base md:text-lg shadow-soft animate-fade-in"
           >
             <MessageCircle className="mr-2 h-4 w-4 md:h-5 md:w-5" />
             상담 시작하기
@@ -65,7 +65,7 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-12 md:py-16">
+      <section className="container mx-auto px-4 pt-12 md:pt-16">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 md:mb-4">
@@ -84,7 +84,7 @@ const Index = () => {
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <CardContent className="p-4 md:p-6 text-center space-y-3 md:space-y-4">
-                  <div className="w-12 h-12 md:w-16 md:h-16 mx-auto rounded-2xl bg-gradient-primary flex items-center justify-center shadow-soft">
+                  <div className="w-12 h-12 md:w-16 md:h-16 mx-auto rounded-2xl bg-[var(--card-icon)] flex items-center justify-center shadow-soft">
                     <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
                   </div>
                   <h3 className="font-semibold text-base md:text-lg text-foreground">
@@ -158,7 +158,7 @@ const Index = () => {
 
               <Button
                 onClick={() => navigate("/chat")}
-                className="w-full mt-6 md:mt-8 bg-gradient-primary hover:opacity-90 transition-opacity text-white rounded-full py-5 md:py-6 shadow-soft text-sm md:text-base"
+                className="w-full mt-6 md:mt-8 bg-[var(--button-bg)] hover:opacity-90 transition-opacity text-white rounded-full py-5 md:py-6 shadow-soft text-sm md:text-base"
               >
                 <MessageCircle className="mr-2 h-4 w-4 md:h-5 md:w-5" />
                 지금 바로 시작하기

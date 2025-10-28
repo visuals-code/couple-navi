@@ -19,6 +19,12 @@ All colors MUST be HSL.
 
     --primary: 340 75% 65%;
     --primary-foreground: 0 0% 100%;
+    
+    /* Custom project colors */
+    --button-bg: #333;
+    --card-icon: #f8bad7;
+    /* --chat-user-bg: #5a5a5a; */
+    --chat-user-bg: #646464;
 
     --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 20%;

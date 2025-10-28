@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Send, Heart } from "lucide-react";
@@ -15,7 +15,7 @@ interface Message {
 
 interface UserContext {
   region: string;
-  children: string;
+  housing: string;
 }
 
 const Chat = () => {
@@ -25,29 +25,34 @@ const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  const handleOnboardingComplete = (region: string, children: string) => {
-    setUserContext({ region, children });
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading]);
+
+  const handleOnboardingComplete = (region: string, housing: string) => {
+    setUserContext({ region, housing });
     setShowOnboarding(false);
     
     const welcomeMessage: Message = {
       id: "1",
       role: "assistant",
-      content: `안녕하세요! 신혼부부 지원 정책 상담 챗봇입니다.\n\n📍 거주 지역: ${region}\n👶 자녀 현황: ${getChildrenLabel(children)}\n\n위 정보를 바탕으로 맞춤형 정책을 안내해드리겠습니다. 궁금하신 내용을 편하게 물어보세요.\n\n예시:\n• 청약 가점 계산은 어떻게 하나요?\n• 정책 대출 금리와 한도가 궁금해요\n• 육아휴직 제도에 대해 알려주세요\n• 신혼여행 항공사 특별 혜택이 있나요?`,
+      content: `안녕하세요! 신혼부부 지원 정책 상담 챗봇입니다.\n\n📍 거주 지역: ${region}\n🏠 주거 형태: ${getHousingLabel(housing)}\n\n위 정보를 바탕으로 맞춤형 정책을 안내해드리겠습니다. 궁금하신 내용을 편하게 물어보세요.\n\n예시:\n• 청약 가점 계산은 어떻게 하나요?\n• 정책 대출 금리와 한도가 궁금해요\n• 주거 지원 관련 정책이 궁금해요\n• 신혼여행 항공사 특별 혜택이 있나요?`,
       timestamp: new Date(),
     };
     
     setMessages([welcomeMessage]);
   };
 
-  const getChildrenLabel = (value: string) => {
+  const getHousingLabel = (value: string) => {
     const labels: Record<string, string> = {
-      "none": "자녀 없음",
-      "planning": "계획 중",
-      "one": "1명",
-      "two": "2명",
-      "three_plus": "3명 이상",
-      "미응답": "미응답"
+      none: "무주택",
+      jeonse: "전세",
+      wolse: "월세",
+      self: "자가",
+      etc: "기타",
+      미응답: "미응답",
     };
     return labels[value] || value;
   };
@@ -71,7 +76,7 @@ const Chat = () => {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `${userContext?.region} 지역, ${getChildrenLabel(userContext?.children || "")} 가구 기준으로 답변드립니다.\n\n실제 서비스에서는 AI가 관련 정책을 분석하여 맞춤형 답변을 제공합니다. RAG 기반으로 최신 정책 정보와 출처를 함께 안내해드립니다.`,
+        content: `${userContext?.region} 지역, ${getHousingLabel(userContext?.housing || "")} 기준으로 답변드립니다.\n\n실제 서비스에서는 AI가 관련 정책을 분석하여 맞춤형 답변을 제공합니다. RAG 기반으로 최신 정책 정보와 출처를 함께 안내해드립니다.`,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, aiMessage]);
@@ -111,7 +116,7 @@ const Chat = () => {
               신혼부부 상담 챗봇
             </h1>
             <p className="text-xs text-muted-foreground truncate">
-              {userContext?.region} · {getChildrenLabel(userContext?.children || "")}
+              {userContext?.region} · {getHousingLabel(userContext?.housing || "")}
             </p>
           </div>
         </div>
@@ -133,6 +138,7 @@ const Chat = () => {
             </div>
           </div>
         )}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Input Area */}
