@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { queryRag } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Send, Heart } from "lucide-react";
@@ -9,8 +10,14 @@ import { OnboardingStep } from "@/components/OnboardingStep";
 interface Message {
   id: string;
   role: "user" | "assistant";
-  content: string;
+  content: string; // may contain HTML for assistant
   timestamp: Date;
+  format?: "html" | "md" | "text";
+  sources?: Array<{
+    title: string;
+    url: string | null;
+    source: string;
+  }>;
 }
 
 interface UserContext {
@@ -71,17 +78,30 @@ const Chat = () => {
     setInput("");
     setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      const data = await queryRag({ question: userMessage.content });
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `${userContext?.region} 지역, ${getHousingLabel(userContext?.housing || "")} 기준으로 답변드립니다.\n\n실제 서비스에서는 AI가 관련 정책을 분석하여 맞춤형 답변을 제공합니다. RAG 기반으로 최신 정책 정보와 출처를 함께 안내해드립니다.`,
+        content: data.answer_md || data.answer_html || data.answer || "",
+        format: (data.answer_md && "md") || (data.answer_html && "html") || "text",
+        sources: data.sources || [],
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, aiMessage]);
+    } catch (error) {
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content:
+          "요청 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+        format: "text",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, aiMessage]);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -128,7 +148,10 @@ const Chat = () => {
           <ChatMessage key={message.id} message={message} />
         ))}
         {isLoading && (
-          <div className="flex justify-start">
+          <div className="flex items-start gap-2">
+            <div className="w-8 h-8 md:w-9 md:h-9 rounded-full overflow-hidden flex-shrink-0">
+              <img src="/bt21.jpg" alt="챗봇 프로필" className="w-full h-full object-cover scale-110" />
+            </div>
             <div className="bg-card rounded-2xl px-4 py-3 shadow-card border border-border">
               <div className="flex gap-1">
                 <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0ms" }} />
