@@ -236,7 +236,7 @@ const Chat = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="궁금한 내용을 입력하세요..."
-            className="flex-1 rounded-full border-border focus:ring-primary focus-visible:ring-1 focus-visible:ring-offset-0 text-sm md:text-base"
+            className="flex-1 rounded-full border-border focus:ring-primary focus-visible:ring-1 focus-visible:ring-offset-0 text-base"
             disabled={isLoading}
           />
           <Button
