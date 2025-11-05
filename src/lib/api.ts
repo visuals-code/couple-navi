@@ -19,7 +19,7 @@ export interface QueryResponse {
 
 export const API_BASE: string =
   (typeof import.meta !== "undefined" && (import.meta as any).env?.VITE_API_BASE) ||
-  "http://localhost:8000";
+  "/api";
 
 export async function queryRag(request: QueryRequest): Promise<QueryResponse> {
   const response = await fetch(`${API_BASE}/query`, {
