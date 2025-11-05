@@ -7,8 +7,23 @@ interface OnboardingStepProps {
 }
 
 const regions = [
-  "서울", "경기", "인천", "부산", "대구", "광주", "대전", "울산", "세종",
-  "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"
+  "서울",
+  "경기",
+  "인천",
+  "부산",
+  "대구",
+  "광주",
+  "대전",
+  "울산",
+  "세종",
+  "강원",
+  "충북",
+  "충남",
+  "전북",
+  "전남",
+  "경북",
+  "경남",
+  "제주",
 ];
 
 const housingOptions = [
@@ -42,7 +57,7 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-hero p-4">
+    <div className="flex items-center justify-center min-h-[100dvh] overflow-hidden bg-gradient-hero p-4">
       <Card className="w-full max-w-lg shadow-card border-border animate-fade-in">
         <CardContent className="p-6 md:p-8">
           <div className="mb-6">
@@ -53,14 +68,15 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
                 <Home className="h-6 w-6 text-primary" />
               )}
               <h2 className="text-xl md:text-2xl font-bold text-foreground">
-                {step === 1 ? "거주 지역을 선택해주세요" : "주거 형태를 알려주세요"}
+                {step === 1
+                  ? "거주 지역을 선택해주세요"
+                  : "주거 형태를 알려주세요"}
               </h2>
             </div>
             <p className="text-sm text-muted-foreground">
-              {step === 1 
+              {step === 1
                 ? "지역별 맞춤 정책을 안내해드립니다"
-                : "주거 형태에 맞는 지원 정책을 찾아드립니다"
-              }
+                : "주거 형태에 맞는 지원 정책을 찾아드립니다"}
             </p>
           </div>
 
@@ -72,8 +88,8 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
                   variant={selectedRegion === region ? "default" : "outline"}
                   onClick={() => setSelectedRegion(region)}
                   className={`h-12 ${
-                    selectedRegion === region 
-                      ? "bg-gradient-primary text-white hover:opacity-90" 
+                    selectedRegion === region
+                      ? "bg-gradient-primary text-white hover:opacity-90"
                       : "hover:bg-secondary"
                   }`}
                 >
@@ -86,11 +102,13 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
               {housingOptions.map((option) => (
                 <Button
                   key={option.value}
-                  variant={selectedHousing === option.value ? "default" : "outline"}
+                  variant={
+                    selectedHousing === option.value ? "default" : "outline"
+                  }
                   onClick={() => setSelectedHousing(option.value)}
                   className={`w-full h-14 justify-start text-left ${
-                    selectedHousing === option.value 
-                      ? "bg-gradient-primary text-white hover:opacity-90" 
+                    selectedHousing === option.value
+                      ? "bg-gradient-primary text-white hover:opacity-90"
                       : "hover:bg-secondary"
                   }`}
                 >
@@ -101,11 +119,7 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
           )}
 
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={handleSkip}
-              className="flex-1"
-            >
+            <Button variant="outline" onClick={handleSkip} className="flex-1">
               건너뛰기
             </Button>
             <Button
@@ -118,8 +132,16 @@ export const OnboardingStep = ({ onComplete }: OnboardingStepProps) => {
           </div>
 
           <div className="flex justify-center gap-2 mt-6">
-            <div className={`h-2 w-2 rounded-full ${step === 1 ? "bg-primary" : "bg-muted"}`} />
-            <div className={`h-2 w-2 rounded-full ${step === 2 ? "bg-primary" : "bg-muted"}`} />
+            <div
+              className={`h-2 w-2 rounded-full ${
+                step === 1 ? "bg-primary" : "bg-muted"
+              }`}
+            />
+            <div
+              className={`h-2 w-2 rounded-full ${
+                step === 2 ? "bg-primary" : "bg-muted"
+              }`}
+            />
           </div>
         </CardContent>
       </Card>

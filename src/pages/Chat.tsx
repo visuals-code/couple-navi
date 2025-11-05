@@ -45,14 +45,16 @@ const Chat = () => {
       localStorage.setItem("region", normalizeRegion(region));
       localStorage.setItem("housing_type", normalizeHousingType(housing));
     } catch {}
-    
+
     const welcomeMessage: Message = {
       id: "1",
       role: "assistant",
-      content: `안녕하세요! 신혼부부 지원 정책 상담 챗봇입니다.\n\n📍 거주 지역: ${region}\n🏠 주거 형태: ${getHousingLabel(housing)}\n\n위 정보를 바탕으로 맞춤형 정책을 안내해드리겠습니다. 궁금하신 내용을 편하게 물어보세요.\n\n예시:\n• 청약 가점 계산은 어떻게 하나요?\n• 정책 대출 금리와 한도가 궁금해요\n• 주거 지원 관련 정책이 궁금해요\n• 신혼여행 항공사 특별 혜택이 있나요?`,
+      content: `안녕하세요! 신혼부부 지원 정책 상담 챗봇입니다.\n\n📍 거주 지역: ${region}\n🏠 주거 형태: ${getHousingLabel(
+        housing
+      )}\n\n위 정보를 바탕으로 맞춤형 정책을 안내해드리겠습니다. 궁금하신 내용을 편하게 물어보세요.\n\n예시:\n• 청약 가점 계산은 어떻게 하나요?\n• 정책 대출 금리와 한도가 궁금해요\n• 주거 지원 관련 정책이 궁금해요\n• 신혼여행 항공사 특별 혜택이 있나요?`,
       timestamp: new Date(),
     };
-    
+
     setMessages([welcomeMessage]);
   };
 
@@ -119,7 +121,9 @@ const Chat = () => {
       } catch {}
 
       const regionToSend = normalizeRegion(userContext?.region ?? storedRegion);
-      const housingToSend = normalizeHousingType(userContext?.housing ?? storedHousingType);
+      const housingToSend = normalizeHousingType(
+        userContext?.housing ?? storedHousingType
+      );
 
       const data = await queryRag({
         question: userMessage.content,
@@ -130,7 +134,8 @@ const Chat = () => {
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content: data.answer_md || data.answer_html || data.answer || "",
-        format: (data.answer_md && "md") || (data.answer_html && "html") || "text",
+        format:
+          (data.answer_md && "md") || (data.answer_html && "html") || "text",
         sources: data.sources || [],
         timestamp: new Date(),
       };
@@ -139,8 +144,7 @@ const Chat = () => {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content:
-          "요청 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+        content: "요청 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
         format: "text",
         timestamp: new Date(),
       };
@@ -162,7 +166,7 @@ const Chat = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex flex-col">
+    <div className="min-h-screen bg-gradient-hero flex flex-col overflow-x-hidden">
       {/* Header */}
       <header className="bg-card border-b border-border px-4 py-3 md:py-4 flex items-center gap-3 shadow-card">
         <Button
@@ -182,7 +186,8 @@ const Chat = () => {
               신혼부부 상담 챗봇
             </h1>
             <p className="text-xs text-muted-foreground truncate">
-              {userContext?.region} · {getHousingLabel(userContext?.housing || "")}
+              {userContext?.region} ·{" "}
+              {getHousingLabel(userContext?.housing || "")}
             </p>
           </div>
         </div>
@@ -196,13 +201,26 @@ const Chat = () => {
         {isLoading && (
           <div className="flex items-start gap-2">
             <div className="w-8 h-8 md:w-9 md:h-9 rounded-full overflow-hidden flex-shrink-0">
-              <img src="/bt21.jpg" alt="챗봇 프로필" className="w-full h-full object-cover scale-110" />
+              <img
+                src="/bt21.jpg"
+                alt="챗봇 프로필"
+                className="w-full h-full object-cover scale-110"
+              />
             </div>
             <div className="bg-card rounded-2xl px-4 py-3 shadow-card border border-border">
               <div className="flex gap-1">
-                <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0ms" }} />
-                <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "150ms" }} />
-                <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "300ms" }} />
+                <div
+                  className="w-2 h-2 rounded-full bg-primary animate-bounce"
+                  style={{ animationDelay: "0ms" }}
+                />
+                <div
+                  className="w-2 h-2 rounded-full bg-primary animate-bounce"
+                  style={{ animationDelay: "150ms" }}
+                />
+                <div
+                  className="w-2 h-2 rounded-full bg-primary animate-bounce"
+                  style={{ animationDelay: "300ms" }}
+                />
               </div>
             </div>
           </div>
@@ -218,7 +236,7 @@ const Chat = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="궁금한 내용을 입력하세요..."
-            className="flex-1 rounded-full border-border focus:ring-primary text-sm md:text-base"
+            className="flex-1 rounded-full border-border focus:ring-primary focus-visible:ring-1 focus-visible:ring-offset-0 text-sm md:text-base"
             disabled={isLoading}
           />
           <Button
