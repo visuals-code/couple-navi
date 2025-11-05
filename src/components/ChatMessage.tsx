@@ -9,7 +9,6 @@ interface Message {
   sources?: Array<{
     title: string;
     url: string | null;
-    source: string;
   }>;
 }
 
@@ -56,7 +55,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
                           {s.title || s.url}
                         </a>
                       ) : (
-                        s.title || s.source
+                        s.title || ""
                       )}
                     </li>
                   ))}

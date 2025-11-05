@@ -1,11 +1,12 @@
 export interface QueryRequest {
   question: string;
+  region: string | null;
+  housing_type: string | null;
 }
 
 export interface QuerySource {
   title: string;
   url: string | null;
-  source: string;
 }
 
 export interface QueryResponse {
@@ -28,6 +29,8 @@ export async function queryRag(request: QueryRequest): Promise<QueryResponse> {
     },
     body: JSON.stringify({
       question: request.question,
+      region: request.region,
+      housing_type: request.housing_type,
     }),
   });
 

@@ -16,7 +16,6 @@ interface Message {
   sources?: Array<{
     title: string;
     url: string | null;
-    source: string;
   }>;
 }
 
@@ -41,6 +40,10 @@ const Chat = () => {
   const handleOnboardingComplete = (region: string, housing: string) => {
     setUserContext({ region, housing });
     setShowOnboarding(false);
+    try {
+      localStorage.setItem("region", normalizeRegion(region));
+      localStorage.setItem("housing_type", normalizeHousingType(housing));
+    } catch {}
     
     const welcomeMessage: Message = {
       id: "1",
@@ -64,6 +67,17 @@ const Chat = () => {
     return labels[value] || value;
   };
 
+  const normalizeRegion = (value: string | undefined) => {
+    if (!value || value === "미응답") return "";
+    return value;
+  };
+
+  const normalizeHousingType = (value: string | undefined) => {
+    const label = getHousingLabel(value || "");
+    if (!label || label === "미응답") return "";
+    return label;
+  };
+
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -79,7 +93,21 @@ const Chat = () => {
     setIsLoading(true);
 
     try {
-      const data = await queryRag({ question: userMessage.content });
+      let storedRegion = "";
+      let storedHousingType = "";
+      try {
+        storedRegion = localStorage.getItem("region") || "";
+        storedHousingType = localStorage.getItem("housing_type") || "";
+      } catch {}
+
+      const regionToSend = normalizeRegion(userContext?.region ?? storedRegion);
+      const housingToSend = normalizeHousingType(userContext?.housing ?? storedHousingType);
+
+      const data = await queryRag({
+        question: userMessage.content,
+        region: regionToSend,
+        housing_type: housingToSend,
+      });
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
