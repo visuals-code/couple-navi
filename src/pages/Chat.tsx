@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { queryRag } from "@/lib/api";
+import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Send, Heart } from "lucide-react";
@@ -79,12 +80,29 @@ const Chat = () => {
   };
 
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    if (isLoading) return;
+    const trimmed = input.trim();
+    if (trimmed.length === 0) {
+      toast({
+        title: "질문을 입력해주세요",
+        description: "질문은 비워둘 수 없어요. 최대 500자까지 입력 가능합니다.",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (trimmed.length > 500) {
+      toast({
+        title: "질문은 최대 500자까지",
+        description: `${trimmed.length}자 입력됨. 불필요한 내용을 줄여주세요.`,
+        variant: "destructive",
+      });
+      return;
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: input,
+      content: trimmed,
       timestamp: new Date(),
     };
 
