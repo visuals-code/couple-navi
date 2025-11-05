@@ -14,6 +14,7 @@ interface Message {
   content: string; // may contain HTML for assistant
   timestamp: Date;
   format?: "html" | "md" | "text";
+  isComplete?: boolean;
   sources?: Array<{
     title: string;
     url: string | null;
@@ -33,10 +34,46 @@ const Chat = () => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const typingTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
+
+  useEffect(() => {
+    return () => {
+      if (typingTimerRef.current) {
+        clearInterval(typingTimerRef.current);
+        typingTimerRef.current = null;
+      }
+    };
+  }, []);
+
+  const streamAssistantMessage = (messageId: string, fullText: string) => {
+    const WORDS_PER_TICK = 1;
+    const INTERVAL_MS = 40;
+    const tokens = fullText.match(/\S+\s*/g) || [fullText];
+    let index = 0;
+    if (typingTimerRef.current) {
+      clearInterval(typingTimerRef.current);
+      typingTimerRef.current = null;
+    }
+    typingTimerRef.current = window.setInterval(() => {
+      index = Math.min(index + WORDS_PER_TICK, tokens.length);
+      const nextSlice = tokens.slice(0, index).join("");
+      setMessages((prev) =>
+        prev.map((m) => (m.id === messageId ? { ...m, content: nextSlice } : m))
+      );
+      if (index >= tokens.length && typingTimerRef.current) {
+        clearInterval(typingTimerRef.current);
+        typingTimerRef.current = null;
+        // mark complete
+        setMessages((prev) =>
+          prev.map((m) => (m.id === messageId ? { ...m, isComplete: true } : m))
+        );
+      }
+    }, INTERVAL_MS);
+  };
 
   const handleOnboardingComplete = (region: string, housing: string) => {
     setUserContext({ region, housing });
@@ -130,22 +167,31 @@ const Chat = () => {
         region: regionToSend,
         housing_type: housingToSend,
       });
-      const aiMessage: Message = {
+      const finalContent =
+        data.answer_md || data.answer_html || data.answer || "";
+      const finalFormat: Message["format"] =
+        (data.answer_md && "md") || (data.answer_html && "html") || "text";
+
+      const placeholder: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: data.answer_md || data.answer_html || data.answer || "",
-        format:
-          (data.answer_md && "md") || (data.answer_html && "html") || "text",
+        content: finalFormat === "html" ? finalContent : "",
+        format: finalFormat,
+        isComplete: finalFormat === "html", // html is rendered at once
         sources: data.sources || [],
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, aiMessage]);
+      setMessages((prev) => [...prev, placeholder]);
+      if (finalFormat !== "html" && finalContent) {
+        streamAssistantMessage(placeholder.id, finalContent);
+      }
     } catch (error) {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content: "요청 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
         format: "text",
+        isComplete: true,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, aiMessage]);
@@ -236,7 +282,7 @@ const Chat = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="궁금한 내용을 입력하세요..."
-            className="flex-1 rounded-full border-border focus:ring-primary focus-visible:ring-1 focus-visible:ring-offset-0 text-base"
+            className="flex-1 rounded-full border-border focus:ring-primary focus-visible:ring-1 focus-visible:ring-offset-0 text-sm placeholder:text-sm"
             disabled={isLoading}
           />
           <Button
