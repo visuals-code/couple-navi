@@ -86,9 +86,9 @@ const Chat = () => {
     const welcomeMessage: Message = {
       id: "1",
       role: "assistant",
-      content: `안녕하세요! 신혼부부 지원 정책 상담 챗봇입니다.\n\n📍 거주 지역: ${region}\n🏠 주거 형태: ${getHousingLabel(
+      content: `안녕하세요! 신혼부부 상담 챗봇입니다.\n\n📍 거주 지역: ${region}\n🏠 주거 형태: ${getHousingLabel(
         housing
-      )}\n\n위 정보를 바탕으로 맞춤형 정책을 안내해드리겠습니다. 궁금하신 내용을 편하게 물어보세요.\n\n예시:\n• 청약 가점 계산은 어떻게 하나요?\n• 정책 대출 금리와 한도가 궁금해요\n• 주거 지원 관련 정책이 궁금해요\n• 신혼여행 항공사 특별 혜택이 있나요?`,
+      )}\n\n위 정보를 바탕으로 맞춤형 정책을 안내해드리겠습니다. 궁금하신 내용을 편하게 물어보세요.\n\n예시:\n• 신혼부부란?\n• 첫째 아이 출산 시 받을 수 있는 지원금은?\n• 미혼모가 받을 수 있는 지원이 뭐가 있어?\n• 신혼 부부가 받을 수 있는 백화점 혜택은?`,
       timestamp: new Date(),
     };
 
@@ -282,7 +282,7 @@ const Chat = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="궁금한 내용을 입력하세요..."
-            className="flex-1 rounded-full border-border focus:ring-primary focus-visible:ring-1 focus-visible:ring-offset-0 text-sm placeholder:text-sm"
+            className="flex-1 rounded-full border-border focus:ring-primary focus-visible:ring-1 focus-visible:ring-offset-0 text-base placeholder:text-base sm:text-sm sm:placeholder:text-sm"
             disabled={isLoading}
           />
           <Button
