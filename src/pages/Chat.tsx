@@ -212,7 +212,7 @@ const Chat = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex flex-col overflow-x-hidden">
+    <div className="min-h-[100dvh] bg-gradient-hero flex flex-col overflow-x-hidden">
       {/* Header */}
       <header className="bg-card border-b border-border px-4 py-3 md:py-4 flex items-center gap-3 shadow-card">
         <Button
